@@ -28,6 +28,7 @@ class PanagoraController extends Controller
 
         $message = 'Lista de votantes obtida com sucesso';
 
+        // O retorno 404 esperado segundo a documentação não está funcionando, caso um evento não existá a api retorna um erro 500
         switch ($http_status_code) {
             case 401:
                 $message = 'Token inválido!';
@@ -36,6 +37,10 @@ class PanagoraController extends Controller
             case 404:
                 $message = 'Evento não encontrado';
                 break;
+        }
+
+        if ($request->getAllVoters == 'true') {
+            dd('k');
         }
 
         return response([
