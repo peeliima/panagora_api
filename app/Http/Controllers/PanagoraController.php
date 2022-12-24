@@ -49,7 +49,7 @@ class PanagoraController extends Controller
         if ($request->getAllDocuments == 'true') {
             $urls = $this->votePersonPDF(
                 new Request([
-                    'vote_ids' => $vote_ids
+                    'votes_ids' => $vote_ids
                 ]),
                 $event_code
             );
@@ -68,7 +68,7 @@ class PanagoraController extends Controller
     public function votePersonPDF(Request $request, $event_code)
     {
         $validation = Validator::make($request->all(), [
-            'vote_ids' => 'required'
+            'votes_ids' => 'required'
         ]);
 
         if ($validation->fails()) {
@@ -78,7 +78,7 @@ class PanagoraController extends Controller
             ], 400);
         }
 
-        $vote_ids = $request->vote_ids;
+        $vote_ids = $request->votes_ids;
 
         $panagora_api = new GuzzleClient();
 
