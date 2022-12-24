@@ -15,4 +15,5 @@ use App\Http\Controllers\PanagoraController;
 |
 */
 
-Route::get('index/{event_code}', [PanagoraController::class, 'index']);
+Route::get('index/{event_code}/voters', [PanagoraController::class, 'index']);
+Route::post('docs/{event_code}/pdf', [PanagoraController::class, 'votePersonPDF']);

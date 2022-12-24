@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Promise;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Validator;
 
 class PanagoraController extends Controller
 {
@@ -46,9 +47,16 @@ class PanagoraController extends Controller
         }
 
         if ($request->getAllDocuments == 'true') {
-            $this->votePersonPDF($vote_ids, $event_code);
-
-            die();
+            $urls = $this->votePersonPDF(
+                new Request([
+                    'vote_ids' => $vote_ids
+                ]),
+                $event_code
+            );
+           
+            return response([
+                'urls' => $urls,
+            ], 200);
         }
 
         return response([
@@ -57,8 +65,21 @@ class PanagoraController extends Controller
         ], $http_status_code);
     }
 
-    public function votePersonPDF(Array $vote_ids, $event_code)
+    public function votePersonPDF(Request $request, $event_code)
     {
+        $validation = Validator::make($request->all(), [
+            'vote_ids' => 'required'
+        ]);
+
+        if ($validation->fails()) {
+            return response([
+                'success' => false,
+                'error' => $validation->errors()
+            ], 400);
+        }
+
+        $vote_ids = $request->vote_ids;
+
         $panagora_api = new GuzzleClient();
 
         foreach ($vote_ids as $vote_id) {
@@ -73,17 +94,31 @@ class PanagoraController extends Controller
                     'http_errors' => false
                 ]
             );
-
-            break;
         }
 
         $responses = Promise\Utils::unwrap($response);
 
         foreach ($responses as $response) {
-            $voters = json_decode($response->getBody()->getContents());
+            $voter = json_decode($response->getBody()->getContents());
 
-            $pdf = Pdf::loadView('pdf.voter', ['name' => $voters->nome]);
-            dd($pdf->download('voter.pdf'));
+            $encrypt_option = $voter->cpf ?? $voter->nome;
+            $encrypt = md5($encrypt_option);
+
+            $pdf = Pdf::loadView('pdf.voter', ['name' => $voter->nome]);
+
+            $voter_name = str_replace(' ', '', $voter->nome);
+            $path = storage_path('app/public/');
+            $fileName =  $voter_name . '-' . $encrypt . '.pdf' ;
+            $pdf->save($path . '/' . $fileName);
+
+            $full_file_path = $path . $fileName;
+
+            $current_person[] = [
+                'votante' => $voter->nome,
+                'pdf_path' => url($full_file_path)
+            ];
         }
+
+        return $current_person;
     }
 }
