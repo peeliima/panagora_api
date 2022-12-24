@@ -50,6 +50,14 @@ class PanagoraController extends Controller
             $vote_ids[] = $vote_person->id;
         }
 
+        $page = $request->page ?? 1;
+        $per_page = $request->per_page ?? 5;
+
+        $vote_ids = collect($vote_ids)
+            ->unique()
+            ->skip(($page - 1) * $per_page)
+            ->take($per_page);
+
         if ($request->getAllDocuments == 'true') {
             $urls = $this->votePersonPDF(
                 new Request([
