@@ -87,6 +87,9 @@ chown www-data -R storage/
 
 Adicione todos os ids dos votantes que desejar, caso não saiba os ids, envie uma request para a primeira rota sem o 
 argumento 'getAllDocuments'
+
+#### Os PDFs gerados serão armazenados dentro da pasta da raiz do projeto 'storage/app/public', como mostrado no return 'pdf_path'
+
 ## Autores
 
 - [Pedro Lima](https://github.com/peeliima)
