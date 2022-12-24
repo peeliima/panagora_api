@@ -22,8 +22,6 @@ jobs:
       run: composer install
     - name: Generate key
       run: php artisan key:generate
-    - name: Clear config
-      run: php artisan config:clear
     - name: Update cache
       run: php artisan config:cache
     - name: Copy private keys in .env
