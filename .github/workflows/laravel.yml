@@ -23,16 +23,13 @@ jobs:
     - name: Generate key
       run: php artisan key:generate
     - name: Copy private keys in .env
-      run: echo "${{ secrets.ENV }}" > .env
+      run: echo "${{ secrets.ENV }}" >> .env
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
     - name: Create Database
       run: |
         mkdir -p database
         touch database/database.sqlite
-
-    - name: Generate key
-      run: php artisan key:generate
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DB_CONNECTION: sqlite
