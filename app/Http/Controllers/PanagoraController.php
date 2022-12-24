@@ -40,6 +40,10 @@ class PanagoraController extends Controller
             case 404:
                 $message = 'Evento não encontrado';
                 break;
+
+            case 500:
+                $message = 'Evento não encontrado, ou erro na assembleia_api';
+                break;
         }
 
         foreach ($vote_people as $vote_person) {
