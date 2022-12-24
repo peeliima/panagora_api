@@ -14,7 +14,7 @@ para obter os votantes de um evento e aparti deles capturar os dados de cada vot
 cp .env.example .env
 ```
 
-2 - Atualize as variáveis de ambiente no arquivo .env
+2 - Atualize as variáveis de ambiente no arquivo .env, ps: nesse contexto só é necessario preecher a PANAGORA_API_ENDPOINT e PANAGORA_API_TOKEN
 
 3 - Suba o container através do docker-compose:
 
