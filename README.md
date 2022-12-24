@@ -90,6 +90,15 @@ argumento 'getAllDocuments'
 
 #### Os PDFs gerados serão armazenados dentro da pasta da raiz do projeto 'storage/app/public', como mostrado no return 'pdf_path'
 
+## Deploy
+
+Para fazer o deploy desse projeto acesse o servidor onde o projeto vai ser executado.
+
+Dê git clone do projeto e siga os passos de instalação descrito acima.
+
+Execute um git pull do projeto na branch main e o projeto estará disponível em produção.
+
+
 ## Autores
 
 - [Pedro Lima](https://github.com/peeliima)
