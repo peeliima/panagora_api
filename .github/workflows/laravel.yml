@@ -22,8 +22,6 @@ jobs:
       run: composer install
     - name: Generate key
       run: php artisan key:generate
-    - name: Update cache
-      run: php artisan config:cache
     - name: Copy private keys in .env
       run: echo "${{ secrets.ENV }}" > .env
     - name: Directory Permissions
@@ -32,6 +30,9 @@ jobs:
       run: |
         mkdir -p database
         touch database/database.sqlite
+
+    - name: Generate key
+      run: php artisan key:generate
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DB_CONNECTION: sqlite
