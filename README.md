@@ -92,7 +92,7 @@ argumento 'getAllDocuments'
 ##### Execução dos teste
 
 Execute o terminal interativo com o container do projeto, 'docker exec -it $APP_NAME bash' ps: $APP_NAME (verifique o nome do container no seu .env)
-Acesse a caminha 'cd home/project-folder' e execute o seguinte comando: './vendor/bin/phpunit --verbose tests',
+Acesse o caminha 'cd home/project-folder' e execute o seguinte comando: './vendor/bin/phpunit --verbose tests',
 Antes de executar o teste, entre no arquivo 'PanagoraTest.php' e na variável protected $event_id informe o ID de um evento válido e aberto.
 
 #### Os PDFs gerados serão armazenados dentro da pasta da raiz do projeto 'storage/app/public', como mostrado no return 'pdf_path'
