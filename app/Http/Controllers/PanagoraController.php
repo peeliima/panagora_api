@@ -29,6 +29,12 @@ class PanagoraController extends Controller
         $http_status_code = $response->getStatusCode();
         $vote_people = json_decode($response->getBody()->getContents());
 
+        if ($http_status_code >= 300) {
+            return response([
+                'response' => $vote_people
+            ], $http_status_code);
+        }
+
         $message = 'Lista de votantes obtida com sucesso';
 
         // O retorno 404 esperado segundo a documentação não está funcionando, caso um evento não exista a api retorna um erro 500
@@ -111,7 +117,14 @@ class PanagoraController extends Controller
         $responses = Promise\Utils::unwrap($response);
 
         foreach ($responses as $response) {
+            $http_status_code = $response->getStatusCode();
             $voter = json_decode($response->getBody()->getContents());
+
+            if ($http_status_code >= 300) {
+                return response([
+                    'response' => $voter
+                ], $http_status_code);
+            }    
 
             $encrypt_option = $voter->cpf ?? $voter->nome;
             $encrypt = md5($encrypt_option);

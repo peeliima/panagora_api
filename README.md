@@ -89,6 +89,12 @@ chown www-data -R storage/
 Adicione todos os ids dos votantes que desejar, caso não saiba os ids, envie uma request para a primeira rota sem o 
 argumento 'getAllDocuments'
 
+##### Execução dos teste
+
+Execute o terminal interativo com o container do projeto, 'docker exec -it $APP_NAME bash' ps: $APP_NAME (verifique o nome do container no seu .env)
+Acesse a caminha 'cd home/project-folder' e execute o seguinte comando: './vendor/bin/phpunit --verbose tests',
+Antes de executar o teste, entre no arquivo 'PanagoraTest.php' e na variável protected $event_id informe o ID de um evento válido e aberto.
+
 #### Os PDFs gerados serão armazenados dentro da pasta da raiz do projeto 'storage/app/public', como mostrado no return 'pdf_path'
 
 ## Deploy
@@ -98,6 +104,8 @@ Para fazer o deploy desse projeto acesse o servidor onde o projeto vai ser execu
 Dê git clone do projeto e siga os passos de instalação descrito acima.
 
 Execute um git pull do projeto na branch main e o projeto estará disponível em produção.
+
+PS: Caso o id do evento seja de um evento que já foi finalizado, alguns testes irão falhar na pipeline.
 
 
 ## Autores
